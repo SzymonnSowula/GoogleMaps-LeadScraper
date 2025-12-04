@@ -3,447 +3,356 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Google Maps Lead Scraper Pro - Profesjonalny scraper firm">
-  <title>Google Maps Lead Scraper</title>
-  
+  <title>Google Maps Scraper</title>
   <style>
-    /* ========================================================================
-       RESET & BASE STYLES
-       ======================================================================== */
-    
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
+    :root {
+      --primary-color: #1a73e8;
+      --primary-hover: #1557b0;
+      --success-color: #1e8e3e;
+      --success-hover: #137333;
+      --text-primary: #202124;
+      --text-secondary: #5f6368;
+      --border-color: #dadce0;
+      --bg-color: #ffffff;
+      --bg-hover: #f1f3f4;
+      --danger-color: #d93025;
+      --warning-color: #f9ab00;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body { 
       width: 800px; 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      padding: 16px;
-      background: #ffffff;
-      color: #202124;
+      font-family: 'Google Sans', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 20px;
+      background: var(--bg-color);
+      color: var(--text-primary);
     }
     
-    /* ========================================================================
-       HEADER
-       ======================================================================== */
-    
-    h3 { 
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    h1 { 
       font-size: 18px;
-      font-weight: 600;
-      color: #202124;
-      margin-bottom: 12px;
-    }
-    
-    #status { 
-      font-size: 13px; 
-      color: #5f6368; 
-      margin-bottom: 12px; 
-      min-height: 20px;
       font-weight: 500;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    
-    /* ========================================================================
-       BUTTONS
-       ======================================================================== */
-    
+
+    .status-bar {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* Controls */
     .controls { 
       display: flex; 
-      gap: 8px; 
-      margin-bottom: 16px; 
+      gap: 12px; 
+      margin-bottom: 20px; 
     }
     
     button { 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       flex: 1; 
-      padding: 10px 16px; 
-      color: white; 
+      padding: 10px 24px; 
       border: none; 
       cursor: pointer; 
       font-weight: 500;
       font-size: 14px;
-      border-radius: 6px;
-      transition: all 0.2s ease;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      border-radius: 4px;
+      transition: background-color 0.2s;
+      font-family: inherit;
     }
     
-    button:hover {
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      transform: translateY(-1px);
+    .btn-primary { 
+      background-color: var(--primary-color);
+      color: white;
     }
     
-    button:active {
-      transform: translateY(0);
+    .btn-primary:hover { 
+      background-color: var(--primary-hover);
     }
     
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-    
-    #scrapeBtn { 
-      background: linear-gradient(135deg, #4285f4 0%, #3367d6 100%);
-    }
-    
-    #scrapeBtn:hover:not(:disabled) { 
-      background: linear-gradient(135deg, #3367d6 0%, #2952b3 100%);
-    }
-    
-    #exportBtn { 
-      background: linear-gradient(135deg, #0f9d58 0%, #0b8043 100%);
+    .btn-success { 
+      background-color: var(--success-color);
+      color: white;
       display: none; 
     }
     
-    #exportBtn:hover:not(:disabled) { 
-      background: linear-gradient(135deg, #0b8043 0%, #096c37 100%);
+    .btn-success:hover { 
+      background-color: var(--success-hover);
     }
 
-    /* ========================================================================
-       FILTERS
-       ======================================================================== */
-    
-    .filters-container { 
+    /* Icons */
+    .icon {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* Filters */
+    .filters-section { 
       display: none; 
       background: #f8f9fa; 
-      border: 1px solid #e8eaed; 
+      border: 1px solid var(--border-color);
       border-radius: 8px; 
-      padding: 14px 16px; 
-      margin-bottom: 16px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      padding: 16px; 
+      margin-bottom: 20px;
     }
     
     .filters-header {
-      font-weight: 600;
-      font-size: 13px;
-      color: #202124;
-      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
     }
     
+    .clear-filters {
+      color: var(--primary-color);
+      cursor: pointer;
+      font-size: 12px;
+      text-decoration: none;
+    }
+    
+    .clear-filters:hover { text-decoration: underline; }
+
     .filters-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
     }
     
     .filter-item {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 13px;
-      color: #3c4043;
-    }
-    
-    .filter-item input[type="checkbox"] {
-      cursor: pointer;
-      width: 16px;
-      height: 16px;
-      accent-color: #4285f4;
     }
     
     .filter-item label {
+      font-size: 13px;
+      color: var(--text-primary);
       cursor: pointer;
-      user-select: none;
-      font-weight: 500;
-    }
-    
-    .clear-filters {
-      font-size: 12px;
-      color: #4285f4;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    
-    .clear-filters:hover {
-      color: #3367d6;
-      text-decoration: underline;
     }
 
-    /* ========================================================================
-       TABLE
-       ======================================================================== */
-    
-    .table-container { 
+    /* Table */
+    .table-wrapper { 
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .table-scroll {
       max-height: 450px; 
       overflow-y: auto; 
-      border: 1px solid #e8eaed; 
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
     
     table { 
       width: 100%; 
       border-collapse: collapse; 
-      font-size: 12px;
+      font-size: 13px;
     }
     
     th { 
       position: sticky; 
       top: 0; 
-      background: linear-gradient(180deg, #f8f9fa 0%, #f1f3f4 100%);
-      border-bottom: 2px solid #e8eaed; 
-      padding: 10px 8px; 
+      background: #f8f9fa;
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 16px; 
       text-align: left; 
-      color: #3c4043;
-      font-weight: 600;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 12px;
       z-index: 10;
     }
     
     td { 
-      border-bottom: 1px solid #f1f3f4; 
-      padding: 10px 8px; 
-      color: #3c4043;
-      vertical-align: middle;
+      border-bottom: 1px solid var(--border-color); 
+      padding: 12px 16px; 
+      color: var(--text-primary);
+      vertical-align: top;
     }
     
-    tr:hover { 
-      background-color: #f8f9fa; 
-    }
-    
-    tr.filtered-out { 
-      display: none; 
-    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background-color: var(--bg-hover); }
+    tr.filtered-out { display: none; }
 
-    /* ========================================================================
-       TABLE COLUMNS
-       ======================================================================== */
-    
-    .col-name { 
-      min-width: 180px; 
-      max-width: 180px;
-    }
-    
-    .col-rating {
-      min-width: 90px;
-      max-width: 90px;
-      text-align: center;
-    }
-    
-    .col-phone { 
-      min-width: 120px; 
-      max-width: 120px;
-    }
-    
-    .col-website { 
-      min-width: 130px; 
-      max-width: 130px;
-    }
-    
-    .col-social {
-      min-width: 100px;
-      max-width: 100px;
-      text-align: center;
-    }
-    
-    .col-hours {
-      min-width: 110px;
-      max-width: 110px;
-      font-size: 11px;
-    }
-    
-    .col-address { 
-      min-width: 150px;
-    }
+    /* Column Widths */
+    .col-name { width: 25%; }
+    .col-rating { width: 12%; }
+    .col-contact { width: 20%; }
+    .col-status { width: 18%; }
+    .col-address { width: 25%; }
 
-    /* ========================================================================
-       TABLE CONTENT STYLES
-       ======================================================================== */
-    
+    /* Data Styling */
     .business-name {
-      font-weight: 600;
-      color: #202124;
-      font-size: 13px;
+      font-weight: 500;
       display: block;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
+      color: var(--primary-color);
     }
-    
-    .rating-container {
-      display: flex;
+
+    .rating-badge {
+      display: inline-flex;
       align-items: center;
       gap: 4px;
-      justify-content: center;
-    }
-    
-    .stars {
-      color: #fbbc04;
-      font-size: 14px;
-      letter-spacing: -1px;
-    }
-    
-    .rating-number {
-      font-weight: 600;
-      color: #202124;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      padding: 2px 6px;
+      border-radius: 12px;
       font-size: 12px;
-    }
-    
-    .review-count {
-      color: #5f6368;
-      font-size: 11px;
-    }
-    
-    .phone-number {
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      color: #202124;
-    }
-    
-    .address-text {
-      color: #5f6368;
-      font-size: 11px;
-      line-height: 1.4;
+      font-weight: 500;
     }
 
-    /* ========================================================================
-       TAGS & BADGES
-       ======================================================================== */
-    
-    .tag-fb { 
-      color: #1877F2; 
-      font-weight: 600;
+    .star-icon {
+      width: 12px;
+      height: 12px;
+      fill: var(--warning-color);
+    }
+
+    .reviews-count {
+      color: var(--text-secondary);
       font-size: 11px;
+      margin-left: 4px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: var(--text-secondary);
     }
     
-    .tag-no-web { 
-      color: #d93025; 
-      font-weight: 600;
-      background: #fce8e6;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 11px;
+    .contact-item a {
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    
+    .contact-item a:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+
+    .status-badge {
       display: inline-block;
-    }
-    
-    .tag-www { 
-      color: #0f9d58; 
-      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
       font-size: 11px;
-    }
-    
-    .hours-open {
-      color: #0f9d58;
-      font-weight: 600;
-    }
-    
-    .hours-closed {
-      color: #d93025;
-      font-weight: 600;
-    }
-    
-    .hours-unknown {
-      color: #5f6368;
-      font-style: italic;
+      font-weight: 500;
+      margin-bottom: 4px;
     }
 
-    /* ========================================================================
-       SCROLLBAR
-       ======================================================================== */
-    
-    .table-container::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    .table-container::-webkit-scrollbar-track {
-      background: #f1f3f4;
-    }
-    
-    .table-container::-webkit-scrollbar-thumb {
-      background: #dadce0;
+    .status-open { background: #e6f4ea; color: var(--success-color); }
+    .status-closed { background: #fce8e6; color: var(--danger-color); }
+    .status-none { background: #f1f3f4; color: var(--text-secondary); }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 6px;
       border-radius: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      margin-right: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    
-    .table-container::-webkit-scrollbar-thumb:hover {
-      background: #bdc1c6;
-    }
+
+    .tag-web { background: #e8f0fe; color: var(--primary-color); }
+    .tag-social { background: #e8f0fe; color: #1877F2; }
+    .tag-missing { background: #f1f3f4; color: var(--text-secondary); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #dadce0; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #bdc1c6; }
   </style>
 </head>
-
 <body>
-  <!-- ========================================================================
-       HEADER
-       ======================================================================== -->
-  
-  <h3>🗺️ Scraper Firm Google Maps v3</h3>
-  <div id="status">Załaduj firmy na mapie i kliknij przycisk.</div>
-  
-  <!-- ========================================================================
-       CONTROLS
-       ======================================================================== -->
-  
+
+  <header>
+    <h1>
+      <svg class="icon" viewBox="0 0 24 24" style="fill: #EA4335;">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+      </svg>
+      Google Maps Scraper
+    </h1>
+    <div id="status" class="status-bar">Gotowy do pobierania</div>
+  </header>
+
   <div class="controls">
-    <button id="scrapeBtn" title="Pobierz dane firm z Google Maps">
-      📥 Pobierz dane
+    <button id="scrapeBtn" class="btn-primary">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+      </svg>
+      Pobierz dane
     </button>
-    <button id="exportBtn" title="Eksportuj dane do pliku CSV">
-      📊 Eksportuj do Excela
+    <button id="exportBtn" class="btn-success">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+      </svg>
+      Eksportuj CSV
     </button>
   </div>
 
-  <!-- ========================================================================
-       FILTERS
-       ======================================================================== -->
-  
-  <div class="filters-container" id="filtersContainer">
+  <div class="filters-section" id="filtersContainer">
     <div class="filters-header">
-      <span>🔍 Filtry wyników</span>
-      <span class="clear-filters" id="clearFilters" title="Wyczyść wszystkie filtry">
-        Wyczyść filtry
-      </span>
+      <span>Filtrowanie wyników</span>
+      <span class="clear-filters" id="clearFilters">Wyczyść</span>
     </div>
     <div class="filters-grid">
       <div class="filter-item">
-        <input type="checkbox" id="filterNoWebsite" title="Pokaż tylko firmy bez strony WWW">
-        <label for="filterNoWebsite">❌ Bez strony WWW</label>
+        <input type="checkbox" id="filterNoWebsite">
+        <label for="filterNoWebsite">Brak strony</label>
       </div>
       <div class="filter-item">
-        <input type="checkbox" id="filterNoPhone" title="Pokaż tylko firmy bez telefonu">
-        <label for="filterNoPhone">📵 Bez telefonu</label>
+        <input type="checkbox" id="filterNoPhone">
+        <label for="filterNoPhone">Brak telefonu</label>
       </div>
       <div class="filter-item">
-        <input type="checkbox" id="filterOnlySocial" title="Pokaż tylko firmy z Facebook/Instagram">
-        <label for="filterOnlySocial">📱 Tylko social media</label>
+        <input type="checkbox" id="filterOnlySocial">
+        <label for="filterOnlySocial">Tylko Social</label>
       </div>
       <div class="filter-item">
-        <input type="checkbox" id="filterOwnWebsite" title="Pokaż tylko firmy z własną stroną">
-        <label for="filterOwnWebsite">🌐 Własna strona WWW</label>
+        <input type="checkbox" id="filterOwnWebsite">
+        <label for="filterOwnWebsite">Własna strona</label>
       </div>
     </div>
   </div>
 
-  <!-- ========================================================================
-       DATA TABLE
-       ======================================================================== -->
-  
-  <div class="table-container">
-    <table id="dataTable">
-      <thead>
-        <tr>
-          <th class="col-name" title="Nazwa firmy">Nazwa</th>
-          <th class="col-rating" title="Ocena i liczba opinii">Ocena</th>
-          <th class="col-phone" title="Numer telefonu">Telefon</th>
-          <th class="col-website" title="Strona internetowa">Strona WWW</th>
-          <th class="col-social" title="Social media">Social Media</th>
-          <th class="col-hours" title="Godziny otwarcia">Godziny</th>
-          <th class="col-address" title="Adres firmy">Adres</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Dane będą wstawione dynamicznie przez JavaScript -->
-      </tbody>
-    </table>
+  <div class="table-wrapper">
+    <div class="table-scroll">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th class="col-name">Firma</th>
+            <th class="col-rating">Ocena</th>
+            <th class="col-contact">Kontakt</th>
+            <th class="col-status">Status</th>
+            <th class="col-address">Adres</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </div>
 
-  <!-- ========================================================================
-       SCRIPTS
-       ======================================================================== -->
-  
   <script src="popup.js"></script>
 </body>
 </html>

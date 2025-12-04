@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Google Maps Lead Scraper Pro",
-  "version": "3.0.0",
-  "description": "Profesjonalny scraper firm z Google Maps z filtrami, gwiazdkami, godzinami otwarcia i eksportem do CSV.",
+  "name": "Google Maps Lead Scraper",
+  "version": "3.1.0",
+  "description": "Profesjonalne narzędzie do pobierania danych o firmach z Google Maps. Eksport do CSV, filtry, czysty interfejs.",
   "author": "Your Name",
   
   "permissions": [
@@ -17,7 +17,7 @@
       "48": "icon.png",
       "128": "icon.png"
     },
-    "default_title": "Scraper Firm Google Maps"
+    "default_title": "Google Maps Scraper"
   },
   
   "icons": {
