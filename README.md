@@ -276,21 +276,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - GitHub: [@SzymonnSowula](https://github.com/SzymonnSowula)
 
 
----
 
-
-## 📸 Screenshots
-
-### Główny interfejs
-![Main Interface](screenshots/main-interface.png)
-
-### Filtry w akcji
-![Filters](screenshots/filters.png)
-
-### Eksport CSV
-![Export](screenshots/export.png)
-
----
 
 **Made with ❤️ for lead generation professionals**
 
