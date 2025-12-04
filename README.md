@@ -273,18 +273,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Autor
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- GitHub: [@SzymonnSowula](https://github.com/SzymonnSowula)
+
 
 ---
 
-## 🙏 Podziękowania
-
-- Google Maps za API
-- Chrome Extensions Team za dokumentację
-- Społeczność open-source za inspirację
-
----
 
 ## 📸 Screenshots
 
